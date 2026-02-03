@@ -240,12 +240,12 @@
         </div>
     </dialog>
 
-    <script>
-        // --- 🔑 GitHub 이미지 기본 경로 설정 ---
-        // 안주성 님의 깃허브 저장소 주소입니다.
+   <script>
+        // --- 🔑 GitHub 이미지 경로 설정 ---
+        // 파일명이 1.jpeg, 2.jpeg ... 형식이어야 합니다.
         const IMAGE_BASE_URL = "https://raw.githubusercontent.com/6aiwinners9-Juseong/Ai_winners-Typography/main/images/";
 
-        // --- 100개 프롬프트 DB (수정된 버전) ---
+        // --- 100개 프롬프트 DB ---
         const db = [
             // [Material] (20 items)
             { id: 1, cat: 'material', title: '말랑말랑 젤리', prompt: '3D typography of text "말랑말랑" made of translucent soft gummy jelly material, pink and orange gradient, sugar coated texture, bright studio lighting.' },
@@ -466,8 +466,8 @@
                 card.className = 'card';
                 card.onclick = () => openModal(item);
                 
-                // 깃허브 이미지 연결 (확장자는 .jpg 기본)
-                const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpg`;
+                // --- 🔑 확장자 .jpeg 수정 적용됨 ---
+                const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
                 
                 card.innerHTML = `
                     <div class="card-img-box">
@@ -495,8 +495,8 @@
 
         // --- Copy & Modal ---
         function openModal(item) {
-            // 상세 이미지도 깃허브에서 가져옴
-            const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpg`;
+            // --- 🔑 확장자 .jpeg 수정 적용됨 ---
+            const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
             
             document.getElementById('mImg').src = imgUrl;
             document.getElementById('mCat').innerText = categoryMeta[item.cat].title.toUpperCase();
