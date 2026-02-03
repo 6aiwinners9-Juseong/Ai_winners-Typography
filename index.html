@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nano Banana Pro | 3D Typography Archive</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 🎨 2026 Premium Design System --- */
+        :root {
+            --nb-yellow: #FFE135;
+            --nb-yellow-glow: rgba(255, 225, 53, 0.5);
+            --nb-bg: #050505;
+            --nb-glass: rgba(255, 255, 255, 0.03);
+            --nb-glass-hover: rgba(255, 255, 255, 0.08);
+            --nb-border: rgba(255, 255, 255, 0.1);
+            --nb-text-main: #ffffff;
+            --nb-text-sub: #9ca3af;
+            --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --nb-success: #00E676;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--nb-bg);
+            color: var(--nb-text-main);
+            margin: 0;
+            overflow-y: overlay;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 225, 53, 0.03), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(100, 100, 255, 0.03), transparent 25%);
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--nb-yellow); }
+
+        /* --- Header --- */
+        header {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 1200px; height: 70px;
+            padding: 0 30px;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--nb-border); border-radius: 100px;
+            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .brand { font-size: 1.5rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; }
+        .brand i { color: var(--nb-yellow); filter: drop-shadow(0 0 10px var(--nb-yellow)); }
+        .badge { font-size: 0.75rem; background: var(--nb-yellow); color: #000; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+
+        .ambient-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background: radial-gradient(circle at 50% -20%, rgba(255, 225, 53, 0.08), transparent 70%); }
+
+        main { max-width: 1400px; margin: 140px auto 80px; padding: 0 30px; }
+
+        /* --- Filters --- */
+        .filter-wrapper { margin-bottom: 60px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .chip {
+            padding: 10px 24px; background: var(--nb-glass); border: 1px solid var(--nb-border);
+            border-radius: 100px; cursor: pointer; font-size: 0.95rem; color: var(--nb-text-sub);
+            transition: all 0.3s var(--ease-elastic); display: flex; align-items: center; gap: 8px;
+        }
+        .chip:hover { background: var(--nb-glass-hover); transform: translateY(-2px); color: #fff; }
+        .chip.active {
+            background: var(--nb-yellow); color: #000; border-color: var(--nb-yellow);
+            font-weight: 700; box-shadow: 0 0 20px var(--nb-yellow-glow);
+        }
+
+        /* --- Section Header --- */
+        .section-header {
+            display: flex; align-items: center; gap: 15px; margin: 80px 0 30px; 
+            padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative;
+        }
+        .section-header::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 50px; height: 2px; background: var(--nb-yellow); box-shadow: 0 0 10px var(--nb-yellow); }
+        .section-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin: 0; letter-spacing: -1px; }
+        .section-icon { color: var(--nb-yellow); font-size: 1.5rem; }
+
+        /* --- Grid --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+
+        .card {
+            background: var(--nb-glass); border: 1px solid var(--nb-border); border-radius: 20px;
+            overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative; display: flex; flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.02); border-color: rgba(255, 225, 53, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7); z-index: 10;
+        }
+        .card:hover .card-img-box img { transform: scale(1.1); }
+
+        .card-img-box { width: 100%; padding-top: 100%; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .card-img-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        
+        .card-info { padding: 18px; flex: 1; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.2) 100%); }
+        .card-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 6px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-desc { font-size: 0.85rem; color: var(--nb-text-sub); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* --- Load More Card --- */
+        .card-more {
+            background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; min-height: 200px; transition: 0.3s; color: var(--nb-text-sub); position: relative; overflow: hidden;
+        }
+        .card-more:hover { border-color: var(--nb-yellow); color: var(--nb-yellow); background: rgba(255, 225, 53, 0.05); transform: translateY(-5px); }
+        .more-icon { 
+            font-size: 2.5rem; margin-bottom: 15px; background: rgba(255,255,255,0.1); width: 60px; height: 60px; 
+            display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.3s;
+        }
+        .card-more:hover .more-icon { background: var(--nb-yellow); color: #000; transform: rotate(90deg); }
+        .more-text { font-size: 1.1rem; font-weight: 700; }
+        .more-count { font-size: 0.8rem; margin-top: 5px; opacity: 0.6; }
+
+        /* --- Modal --- */
+        dialog {
+            background: #111; color: #fff; border: 1px solid #333; border-radius: 24px;
+            width: 95%; max-width: 1000px; padding: 0; box-shadow: 0 0 100px rgba(0,0,0,0.8);
+            animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        dialog::backdrop { background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
+        
+        .modal-layout { display: flex; height: 80vh; }
+        .modal-img { flex: 1.3; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid #222; position: relative; }
+        .modal-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .modal-content { flex: 1; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; background: #111; }
+        
+        .prompt-container { position: relative; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; }
+        .prompt-header {
+            background: #222; padding: 10px 15px; font-size: 0.8rem; color: #888;
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+        }
+        .prompt-box { padding: 20px; font-family: 'JetBrains Mono', monospace; line-height: 1.7; color: #ddd; font-size: 0.95rem; }
+        .highlight { color: var(--nb-yellow); font-weight: bold; text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 4px; }
+        
+        .btn-copy { 
+            background: transparent; color: #fff; border: 1px solid #444; 
+            padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; 
+            font-weight: 700; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .btn-copy:hover { background: #333; }
+        .btn-copy.success { background: var(--nb-success); border-color: var(--nb-success); color: #000; transform: scale(1.05); }
+
+        .close-btn { 
+            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); border: 1px solid #444; 
+            color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; 
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .close-btn:hover { background: #fff; color: #000; transform: rotate(90deg); }
+
+        @media (max-width: 900px) {
+            .modal-layout { flex-direction: column; height: 90vh; }
+            .modal-img { height: 40%; border-right: none; border-bottom: 1px solid #222; }
+            header { width: 95%; top: 10px; padding: 0 20px; }
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(30, 30, 30, 0.9); border: 1px solid #444; backdrop-filter: blur(10px);
+            padding: 12px 25px; border-radius: 50px; display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); z-index: 2000; opacity: 0; pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .toast-container.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast-icon { background: var(--nb-success); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .toast-msg { font-size: 0.9rem; font-weight: 600; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+    <div id="toast" class="toast-container">
+        <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
+        <div class="toast-msg">복사 완료! 붙여넣기 해보세요.</div>
+    </div>
+
+    <header>
+        <a href="#" class="brand">
+            <i class="fa-solid fa-bolt"></i> NanoBanana<span style="color:#fff;">Pro</span>
+            <span class="badge">Archive</span>
+        </a>
+    </header>
+
+    <main>
+        <div class="filter-wrapper">
+            <div class="chip active" data-filter="all"><i class="fa-solid fa-house"></i> 전체보기</div>
+            <div class="chip" data-filter="material"><i class="fa-regular fa-gem"></i> 질감/재질</div>
+            <div class="chip" data-filter="food"><i class="fa-solid fa-burger"></i> 푸드/디저트</div>
+            <div class="chip" data-filter="nature"><i class="fa-solid fa-leaf"></i> 자연/힐링</div>
+            <div class="chip" data-filter="tech"><i class="fa-solid fa-microchip"></i> 테크/SF</div>
+            <div class="chip" data-filter="art"><i class="fa-solid fa-palette"></i> 예술/스타일</div>
+        </div>
+        <div id="contentArea"></div>
+    </main>
+
+    <dialog id="modal">
+        <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-layout">
+            <div class="modal-img"><img id="mImg" src="" alt=""></div>
+            <div class="modal-content">
+                <div>
+                    <span id="mCat" style="color:var(--nb-yellow); font-weight:800; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase;">CATEGORY</span>
+                    <h2 id="mTitle" style="margin:10px 0 0; font-size:2rem; line-height:1.2;">Title</h2>
+                </div>
+                
+                <div style="margin-top:20px;">
+                    <div class="prompt-container">
+                        <div class="prompt-header">
+                            <span><i class="fa-solid fa-terminal"></i> PROMPT</span>
+                            <button id="copyBtn" class="btn-copy" onclick="copyPrompt()">
+                                <i class="fa-regular fa-copy"></i> COPY CODE
+                            </button>
+                        </div>
+                        <div class="prompt-box">
+                            <span id="mPrompt">...</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.85rem; color:#666; margin-top:15px; display:flex; gap:10px; align-items:center;">
+                        <i class="fa-regular fa-lightbulb" style="color:var(--nb-yellow);"></i> 
+                        <span>노란색 밑줄 부분은 원하는 한글로 변경하세요.</span>
+                    </p>
+                </div>
+
+                <div style="margin-top:auto; display:flex; gap:15px;">
+                    <div style="background:#222; padding:10px 20px; border-radius:12px; border:1px solid #333;">
+                        <div style="color:#666; font-size:0.75rem;">MODEL</div>
+                        <div style="font-weight:bold; color:#fff;">NB Pro v3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        // --- 🔑 GitHub 이미지 기본 경로 설정 ---
+        // 안주성 님의 깃허브 저장소 주소입니다.
+        const IMAGE_BASE_URL = "https://raw.githubusercontent.com/6aiwinners9-Juseong/Ai_winners-Typography/main/images/";
+
+        // --- 100개 프롬프트 DB (수정된 버전) ---
+        const db = [
+            // [Material] (20 items)
+            { id: 1, cat: 'material', title: '말랑말랑 젤리', prompt: '3D typography of text "말랑말랑" made of translucent soft gummy jelly material, pink and orange gradient, sugar coated texture, bright studio lighting.' },
+            { id: 2, cat: 'material', title: '리퀴드 골드', prompt: '3D typography of text "황금" formed by melting liquid gold, dripping effect, metallic reflection, black background, high contrast.' },
+            { id: 3, cat: 'material', title: '포근한 털실', prompt: 'Text "포근해" formed by soft white wool fabric, knitted sweater texture, loose threads, warm sunlight, cozy atmosphere.' },
+            { id: 4, cat: 'material', title: '투명 얼음', prompt: '3D text "시원" carved from a block of clear ice, melting water drops, cold vapor mist, blue cinematic lighting.' },
+            { id: 5, cat: 'material', title: '다이아몬드', prompt: 'Text "럭셔리" made of sparkling clear diamonds, prism light reflection, jewelry style, expensive look, black background.' },
+            { id: 6, cat: 'material', title: '데님 청바지', prompt: 'Text "청춘" stitched from blue denim fabric pieces, white thread details, frayed edges, fashion style.' },
+            { id: 7, cat: 'material', title: '뽁뽁이', prompt: 'Text "보호" formed by layers of bubble wrap plastic material, transparent texture, air bubbles, packaging design.' },
+            { id: 8, cat: 'material', title: '그린 슬라임', prompt: 'Text "끈적" made of green gooey slime, dripping liquid, shiny texture, wet surface reflection.' },
+            { id: 9, cat: 'material', title: '가죽 엠보싱', prompt: 'Text "빈티지" embossed and pressed into brown leather texture, realistic skin pore details, classic luxury style.' },
+            { id: 10, cat: 'material', title: '네온 튜브', prompt: 'Text "오늘밤" formed by glowing glass neon tubes, installed on a wet brick wall, cyberpunk colors, reflection.' },
+            { id: 11, cat: 'material', title: '비눗방울', prompt: 'Text "꿈" made of clustered iridescent soap bubbles, rainbow reflection, floating in air, transparent.' },
+            { id: 12, cat: 'material', title: '깨진 유리', prompt: 'Text "파편" formed by exploding shattered glass shards, sharp edges, flying particles, high speed freeze frame.' },
+            { id: 13, cat: 'material', title: '녹슨 철', prompt: 'Text "세월" made of heavy rusty iron metal, orange corrosion texture, peeling paint, grunge industrial style.' },
+            { id: 14, cat: 'material', title: '덕트 테이프', prompt: 'Text "수리" created with layers of silver duct tape stuck on a wall, wrinkled texture, rough background.' },
+            { id: 15, cat: 'material', title: '공단 리본', prompt: 'Text "선물" formed by twisting silky red satin ribbon, smooth curves, glossy fabric texture.' },
+            { id: 16, cat: 'material', title: '스펀지', prompt: 'Text "흡수" carved from yellow porous sponge material, soft lighting, macro shot of holes.' },
+            { id: 17, cat: 'material', title: '크롬 메탈', prompt: 'Text "미래" made of polished solid chrome metal, mirror reflection of city, sleek futuristic style.' },
+            { id: 18, cat: 'material', title: '붉은 벽돌', prompt: 'Text "단단" built with stacked red bricks, cement mortar details, construction site vibe.' },
+            { id: 19, cat: 'material', title: '골판지 박스', prompt: 'Text "배송" constructed from cardboard box material, recycled paper texture, tape details.' },
+            { id: 20, cat: 'material', title: '알루미늄 호일', prompt: 'Text "반짝" made of crumpled silver aluminum foil, metallic wrinkles, shiny reflection.' },
+
+            // [Food] (20 items)
+            { id: 21, cat: 'food', title: '육즙 스테이크', prompt: '3D typography of the word "육즙" formed by dripping, glistening meat juice and melted fat. Rich savory brown color, sizzling texture with rising steam, macro lens photography, dark warm lighting.' },
+            { id: 22, cat: 'food', title: '갓 구운 빵', prompt: 'Typography "빵" baked as a crusty golden-brown sourdough loaf block. Cracked surface texture dusted with white flour, warm oven light, steam rising, rustic bakery background.' },
+            { id: 23, cat: 'food', title: '건배 맥주', prompt: 'High-speed photography of the word "건배" formed by a dynamic splash of golden beer and foam as glasses clink. Exploding bubbles, motion freeze, celebratory party bokeh background.' },
+            { id: 24, cat: 'food', title: '모짜렐라 치즈', prompt: '3D text "치즈" formed by stretching melted mozzarella cheese, pizza background, appetizing food photography.' },
+            { id: 25, cat: 'food', title: '신선한 과일', prompt: 'Text "상큼" carved from fresh fruit flesh (orange, kiwi, strawberry), water droplets, vibrant juicy colors.' },
+            { id: 26, cat: 'food', title: '달콤한 꿀', prompt: 'Text "달콤" formed by thick golden honey dripping from a dipper, honeycomb background, sticky texture.' },
+            { id: 27, cat: 'food', title: '연어 회', prompt: 'Text "싱싱" made of fresh raw salmon slices, orange texture with white fat stripes, sushi plate background.' },
+            { id: 28, cat: 'food', title: '생크림', prompt: 'Text "축하" piped with fluffy white whipped cream, strawberry topping, cake background, birthday vibe.' },
+            { id: 29, cat: 'food', title: '케첩', prompt: '3D text "케첩" made of squeezed red ketchup liquid floating in air, glossy texture, fast food vibe.' },
+            { id: 30, cat: 'food', title: '라면 면발', prompt: 'Text "후루룩" formed by wavy cooked ramen noodles, floating with green onions, steam rising, spicy soup vibe.' },
+            { id: 31, cat: 'food', title: '커피 원두', prompt: 'Text "모닝" formed by a pile of roasted coffee beans, dark brown texture, espresso aroma vibe.' },
+            { id: 32, cat: 'food', title: '초콜릿', prompt: 'Text "사랑" made of melting dark chocolate liquid, glossy texture, macro shot, dessert photography.' },
+            { id: 33, cat: 'food', title: '쿠키', prompt: 'Text "바삭" baked as a chocolate chip cookie shape, crumb texture, warm oven lighting.' },
+            { id: 34, cat: 'food', title: '후라이드 치킨', prompt: 'Text "치킨" made of crispy golden fried chicken skin texture, oily and crunchy, delicious food shot.' },
+            { id: 35, cat: 'food', title: '아보카도', prompt: 'Text "건강" carved from fresh green avocado flesh, creamy texture, seed background.' },
+            { id: 36, cat: 'food', title: '팝콘', prompt: 'Text "영화" formed by a cluster of fluffy popcorn kernels, cinema style, salty texture.' },
+            { id: 37, cat: 'food', title: '마카롱', prompt: 'Text "디저트" made of stacked colorful macarons, pastel colors, french dessert style.' },
+            { id: 38, cat: 'food', title: '흰 쌀밥', prompt: 'Text "밥심" made of a clump of shiny white cooked rice grains, steam rising, warm korean food vibe.' },
+            { id: 39, cat: 'food', title: '페퍼로니 피자', prompt: 'Text "피자" formed by pepperoni slices and melted cheese on a pizza base.' },
+            { id: 40, cat: 'food', title: '알록달록 캔디', prompt: 'Text "POP" made of hard candies and jelly beans, sugar coated, bright playful colors.' },
+
+            // [Nature] (20 items)
+            { id: 41, cat: 'nature', title: '벚꽃잎', prompt: 'Text "봄" formed by a swirl of floating pink cherry blossom petals, soft sunlight, spring breeze vibe.' },
+            { id: 42, cat: 'nature', title: '이끼 바위', prompt: 'Text "숲" shaped from a rock covered in thick green moss, forest background, nature texture.' },
+            { id: 43, cat: 'nature', title: '번개', prompt: 'Text "파워" formed by striking blue lightning bolts, dark stormy sky background, electric energy.' },
+            { id: 44, cat: 'nature', title: '모래성', prompt: '3D text "바다" sculpted from wet sand on a beach, 3d castle style, ocean waves background, summer vibe.' },
+            { id: 45, cat: 'nature', title: '별자리', prompt: 'Text "우주" formed by connecting shining stars in the night sky, constellation font style, galaxy background.' },
+            { id: 46, cat: 'nature', title: '마그마', prompt: 'Text "열정" made of molten lava and cracked black rock, glowing orange heat, volcano background.' },
+            { id: 47, cat: 'nature', title: '물방울', prompt: 'Text "비" formed by gathering condensation water droplets on a glass surface, rainy city bokeh background.' },
+            { id: 48, cat: 'nature', title: '선인장', prompt: '3D text "가시" shaped like a green cactus plant with sharp thorns, desert background.' },
+            { id: 49, cat: 'nature', title: '가을 단풍', prompt: 'Text "추억" composed of a pile of dry maple leaves, red and orange colors, autumn sunlight.' },
+            { id: 50, cat: 'nature', title: '구름', prompt: 'Text "하늘" formed by fluffy white cumulus clouds in a clear blue sky, soft sunlight.' },
+            { id: 51, cat: 'nature', title: '오로라', prompt: 'Text "신비" formed by curtain of green and purple northern lights (aurora), night sky.' },
+            { id: 52, cat: 'nature', title: '거미줄', prompt: 'Text "함정" made of intricate spider webs, morning dew drops, macro photography.' },
+            { id: 53, cat: 'nature', title: '대나무', prompt: 'Text "대나무" made of fresh green bamboo stalks arranged together, asian forest vibe.' },
+            { id: 54, cat: 'nature', title: '산호초', prompt: 'Text "바닷속" made of colorful coral reef structures, underwater blue ocean background.' },
+            { id: 55, cat: 'nature', title: '은하수', prompt: 'Text "갤럭시" formed by spiraling galaxy stars and cosmic dust, deep space purple.' },
+            { id: 56, cat: 'nature', title: '토네이도', prompt: 'Text "바람" formed by swirling tornado wind and dust, dynamic motion blur.' },
+            { id: 57, cat: 'nature', title: '물튀김', prompt: 'Text "워터" formed by dynamic water splash in mid-air, high speed photography, blue background.' },
+            { id: 58, cat: 'nature', title: '불꽃', prompt: 'Text "불꽃" made of burning fire flames, dark smoke background, intense heat.' },
+            { id: 59, cat: 'nature', title: '덩굴 식물', prompt: 'Text "생명" formed by twisting green vines and leaf veins, nature organic style.' },
+            { id: 60, cat: 'nature', title: '눈송이', prompt: 'Text "겨울" formed by clustered microscopic ice snowflakes, cold blue texture, winter vibe.' },
+
+            // [Tech] (20 items)
+            { id: 61, cat: 'tech', title: '홀로그램', prompt: 'Holographic digital text "시스템", floating in mid-air, glitch effect, blue neon, sci-fi HUD style.' },
+            { id: 62, cat: 'tech', title: '매트릭스', prompt: 'Text "코드" formed by falling green binary code rain, hacker computer screen style.' },
+            { id: 63, cat: 'tech', title: '회로 기판', prompt: 'Text "AI" made of green electronic circuit board with gold chips and soldering details.' },
+            { id: 64, cat: 'tech', title: '복셀 아트', prompt: '3D Text "GAME" made of colorful 8-bit voxel blocks, isometric view, retro game style.' },
+            { id: 65, cat: 'tech', title: '스팀펑크', prompt: 'Text "기계" assembled from rusty brass gears, pipes and steam engine parts, vintage machinery.' },
+            { id: 66, cat: 'tech', title: '마법진', prompt: 'Text "소환" formed by glowing magic rune circles, purple energy particles, arcane fantasy style.' },
+            { id: 67, cat: 'tech', title: '레이저', prompt: 'Text "클럽" formed by crossing bright laser beams in smoke, nightlife party atmosphere.' },
+            { id: 68, cat: 'tech', title: '엑스레이', prompt: 'Text "뼈" revealing bone structure inside the typography, x-ray blue film style, medical concept.' },
+            { id: 69, cat: 'tech', title: '글리치', prompt: 'Text "에러" with heavy digital distortion, rgb split, broken screen effect, cyberpunk style.' },
+            { id: 70, cat: 'tech', title: '우주선', prompt: 'Text "NASA" constructed from white spaceship hull plates, panel lines, weathering details.' },
+            { id: 71, cat: 'tech', title: '와이어프레임', prompt: '3D text "설계" constructed from translucent glowing blue wireframes, architectural blueprint style.' },
+            { id: 72, cat: 'tech', title: '서버 라이트', prompt: 'Text "데이터" formed by blinking LED lights on a black server rack cluster.' },
+            { id: 73, cat: 'tech', title: 'AR 블록', prompt: 'Text "가상" made of voxel 3d blocks floating in AR space, augmented reality interface.' },
+            { id: 74, cat: 'tech', title: '드론 군집', prompt: 'Text "시야" formed by a swarm of drones flying in the sky, aerial view.' },
+            { id: 75, cat: 'tech', title: 'TV 노이즈', prompt: 'Text "지지직" made of static tv noise texture, black and white grain, distortion.' },
+            { id: 76, cat: 'tech', title: 'QR 코드', prompt: 'Text "스캔" made of abstract 3d QR code blocks, digital aesthetic, white background.' },
+            { id: 77, cat: 'tech', title: '로봇', prompt: 'Text "로봇" assembled from white glossy robot parts and joints, clean sci-fi style.' },
+            { id: 78, cat: 'tech', title: '전선', prompt: 'Text "연결" formed by tangled colorful electrical wires and cables, chaotic tech art.' },
+            { id: 79, cat: 'tech', title: '사이버 시티', prompt: 'Text "도시" formed by futuristic skyscrapers and neon lights viewed from above.' },
+            { id: 80, cat: 'tech', title: '진공관', prompt: 'Text "아날로그" made of glowing orange vacuum tubes, vintage audio equipment style.' },
+
+            // [Art] (20 items)
+            { id: 81, cat: 'art', title: '페이퍼 컷', prompt: 'Layered paper cut art style text "동화", depth shadows, warm backlight, pastel colors.' },
+            { id: 82, cat: 'art', title: '스프레이', prompt: '3D text "힙합" made of colorful spray paint gas and dripping liquid floating in air, graffiti style.' },
+            { id: 83, cat: 'art', title: '수채화', prompt: 'Text "감성" formed by a splash of colorful watercolor liquid in clear water, artistic style.' },
+            { id: 84, cat: 'art', title: '서예 먹물', prompt: '3D text "한국" resembling thick 3D black ink strokes floating in air, calligraphy style.' },
+            { id: 85, cat: 'art', title: '유화', prompt: 'Text "명화" made of thick impasto oil painting strokes, Van Gogh style swirling colors.' },
+            { id: 86, cat: 'art', title: '종이접기', prompt: 'Text "종이" made of folded colored paper, sharp creases, origami craft style.' },
+            { id: 87, cat: 'art', title: '스티커', prompt: 'Text "HIP" made of a pile of colorful street fashion stickers, layered collage.' },
+            { id: 88, cat: 'art', title: '분필 가루', prompt: 'Text "학교" made of compacted white chalk dust powder on a green blackboard.' },
+            { id: 89, cat: 'art', title: '라이트 페인팅', prompt: 'Long exposure light painting text "희망", glowing trails of light in the dark, bokeh background.' },
+            { id: 90, cat: 'art', title: '마블링', prompt: 'Text "예술" made of swirling oil marbling pattern, psychedelic colors, liquid art texture.' },
+            { id: 91, cat: 'art', title: '점토', prompt: 'Text "장난" made of colorful plasticine clay, fingerprints, stop motion animation style.' },
+            { id: 92, cat: 'art', title: '모자이크', prompt: 'Text "조각" made of small colorful ceramic mosaic tiles, grout texture.' },
+            { id: 93, cat: 'art', title: '타투 잉크', prompt: 'Text "문신" formed by vintage ink needle patterns suspended in 3D space.' },
+            { id: 94, cat: 'art', title: '자수 실', prompt: 'Text "정성" made of floating red embroidery threads, sewing craft style.' },
+            { id: 95, cat: 'art', title: '팝업북', prompt: 'Text "이야기" rising from an open book as 3d paper pop-up art structure.' },
+            { id: 96, cat: 'art', title: '잉크 얼룩', prompt: 'Text "심리" formed by black Rorschach inkblots on white paper.' },
+            { id: 97, cat: 'art', title: '연필심', prompt: 'Text "그림" made of stacked pencil lead and graphite shavings, sketch art style.' },
+            { id: 98, cat: 'art', title: '파스텔 가루', prompt: 'Text "부드러움" made of crushed soft pastel powder, dreamy colors.' },
+            { id: 99, cat: 'art', title: '목탄', prompt: 'Text "크로키" made of burnt charcoal pieces, rough texture, art student vibe.' },
+            { id: 100, cat: 'art', title: '조각상', prompt: 'Text "신화" carved from white marble stone, classical greek sculpture style.' }
+        ];
+
+        // --- Config ---
+        const categoryMeta = {
+            'material': { title: '질감 & 재질', icon: 'fa-gem' },
+            'food': { title: '푸드 & 디저트', icon: 'fa-burger' },
+            'nature': { title: '자연 & 힐링', icon: 'fa-leaf' },
+            'tech': { title: '테크 & SF', icon: 'fa-robot' },
+            'art': { title: '예술 & 스타일', icon: 'fa-palette' }
+        };
+
+        const contentArea = document.getElementById('contentArea');
+        const modal = document.getElementById('modal');
+        const chips = document.querySelectorAll('.chip');
+        const toast = document.getElementById('toast');
+        const copyBtn = document.getElementById('copyBtn');
+        
+        let currentFilter = 'all';
+        let currentItems = [];
+        let visibleCount = 0;
+        const ITEMS_PER_PAGE = 10; 
+
+        // --- Render ---
+        function render(filter) {
+            currentFilter = filter;
+            contentArea.innerHTML = ''; 
+
+            if (filter === 'all') {
+                Object.keys(categoryMeta).forEach(catKey => {
+                    const catItems = db.filter(item => item.cat === catKey);
+                    if (catItems.length === 0) return;
+
+                    const sectionHeader = document.createElement('div');
+                    sectionHeader.className = 'section-header';
+                    sectionHeader.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <i class="fa-solid ${categoryMeta[catKey].icon} section-icon"></i>
+                            <h2 class="section-title">${categoryMeta[catKey].title}</h2>
+                        </div>
+                    `;
+                    contentArea.appendChild(sectionHeader);
+
+                    const grid = document.createElement('div');
+                    grid.className = 'grid';
+                    
+                    createCards(catItems.slice(0, 4), grid);
+
+                    const moreCard = document.createElement('div');
+                    moreCard.className = 'card-more';
+                    const remaining = Math.max(0, catItems.length - 4);
+                    moreCard.innerHTML = `
+                        <div class="more-icon"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="more-text">전체보기</div>
+                        <div class="more-count">+${remaining}개 더보기</div>
+                    `;
+                    moreCard.onclick = () => switchToFilter(catKey);
+                    grid.appendChild(moreCard);
+
+                    contentArea.appendChild(grid);
+                });
+
+            } else {
+                currentItems = db.filter(item => item.cat === filter);
+                visibleCount = 0;
+                
+                const grid = document.createElement('div');
+                grid.className = 'grid';
+                grid.id = 'filterGrid';
+                contentArea.appendChild(grid);
+                
+                loadMoreItems(); 
+            }
+        }
+
+        function loadMoreItems() {
+            const grid = document.getElementById('filterGrid');
+            const existingMoreCard = grid.querySelector('.card-more');
+            if (existingMoreCard) existingMoreCard.remove();
+
+            const nextItems = currentItems.slice(visibleCount, visibleCount + ITEMS_PER_PAGE);
+            createCards(nextItems, grid);
+            visibleCount += nextItems.length;
+
+            if (visibleCount < currentItems.length) {
+                const moreCard = document.createElement('div');
+                moreCard.className = 'card-more';
+                const remaining = currentItems.length - visibleCount;
+                moreCard.innerHTML = `
+                    <div class="more-icon"><i class="fa-solid fa-plus"></i></div>
+                    <div class="more-text">더 불러오기</div>
+                    <div class="more-count">${remaining}개 남음</div>
+                `;
+                moreCard.onclick = loadMoreItems; 
+                grid.appendChild(moreCard);
+            }
+        }
+
+        function switchToFilter(catKey) {
+            document.querySelector('.chip.active').classList.remove('active');
+            document.querySelector(`.chip[data-filter="${catKey}"]`).classList.add('active');
+            render(catKey);
+            window.scrollTo(0, 0);
+        }
+
+        function createCards(items, parentGrid) {
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openModal(item);
+                
+                // 깃허브 이미지 연결 (확장자는 .jpg 기본)
+                const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpg`;
+                
+                card.innerHTML = `
+                    <div class="card-img-box">
+                        <img src="${imgUrl}" loading="lazy" alt="${item.title}" 
+                             onerror="this.src='https://placehold.co/400x400/222/FFE135?text=No+Image'">
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">${item.title}</h3>
+                        <div class="card-desc">${item.prompt.substring(0, 30)}...</div>
+                    </div>
+                `;
+                parentGrid.appendChild(card);
+            });
+        }
+
+        render('all');
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelector('.chip.active').classList.remove('active');
+                chip.classList.add('active');
+                render(chip.dataset.filter);
+            });
+        });
+
+        // --- Copy & Modal ---
+        function openModal(item) {
+            // 상세 이미지도 깃허브에서 가져옴
+            const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpg`;
+            
+            document.getElementById('mImg').src = imgUrl;
+            document.getElementById('mCat').innerText = categoryMeta[item.cat].title.toUpperCase();
+            document.getElementById('mTitle').innerText = item.title;
+            const markedPrompt = item.prompt.replace(/"(.*?)"/g, '<span class="highlight">"$1"</span>');
+            document.getElementById('mPrompt').innerHTML = markedPrompt;
+            document.getElementById('mPrompt').dataset.raw = item.prompt;
+            resetCopyBtn();
+            modal.showModal();
+        }
+        
+        function closeModal() { modal.close(); }
+        modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+
+        function copyPrompt() {
+            const rawText = document.getElementById('mPrompt').dataset.raw;
+            navigator.clipboard.writeText(rawText).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.classList.add('success');
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> COPIED!';
+                showToast();
+                setTimeout(resetCopyBtn, 2000);
+            });
+        }
+
+        function resetCopyBtn() {
+            const btn = document.getElementById('copyBtn');
+            btn.classList.remove('success');
+            btn.innerHTML = '<i class="fa-regular fa-copy"></i> COPY CODE';
+        }
+
+        function showToast() {
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
