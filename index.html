@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nano Banana Pro | 3D Typography Archive</title>
+    <title>Nano Banana Pro | Creator Edition</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -55,7 +55,24 @@
 
         .brand { font-size: 1.5rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; }
         .brand i { color: var(--nb-yellow); filter: drop-shadow(0 0 10px var(--nb-yellow)); }
-        .badge { font-size: 0.75rem; background: var(--nb-yellow); color: #000; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+        
+        /* ✨ 헤더 버튼 그룹 */
+        .header-actions { display: flex; gap: 10px; }
+
+        .btn-icon-only {
+            background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2);
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .btn-icon-only:hover { background: #fff; color: #000; }
+
+        .btn-add {
+            background: var(--nb-yellow); color: #000; border: none;
+            padding: 0 20px; height: 40px; border-radius: 20px; font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            transition: 0.2s;
+        }
+        .btn-add:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--nb-yellow-glow); }
 
         .ambient-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background: radial-gradient(circle at 50% -20%, rgba(255, 225, 53, 0.08), transparent 70%); }
 
@@ -103,7 +120,6 @@
             z-index: 10;
         }
 
-        /* --- 🖼️ Image Box (Full Cover) --- */
         .card-img-box { 
             width: 100%; padding-top: 100%; position: relative; overflow: hidden; 
             border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -161,14 +177,9 @@
             background: #222; padding: 10px 15px; font-size: 0.8rem; color: #888;
             display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
         }
-        /* --- ✨ [수정] JSON 포맷을 위한 CSS --- */
         .prompt-box { 
-            padding: 20px; 
-            font-family: 'JetBrains Mono', monospace; 
-            line-height: 1.7; 
-            color: #ddd; 
-            font-size: 0.9rem;
-            white-space: pre-wrap; /* JSON 줄바꿈과 들여쓰기 유지 */
+            padding: 20px; font-family: 'JetBrains Mono', monospace; line-height: 1.7; 
+            color: #ddd; font-size: 0.9rem; white-space: pre-wrap; 
         }
         .highlight { color: var(--nb-yellow); font-weight: bold; text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 4px; }
         
@@ -187,6 +198,23 @@
             display: flex; align-items: center; justify-content: center; transition: 0.2s;
         }
         .close-btn:hover { background: #fff; color: #000; transform: rotate(90deg); }
+
+        /* --- ✨ Add Form Modal Style --- */
+        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        .form-label { font-size: 0.9rem; font-weight: 700; color: var(--nb-text-sub); }
+        .form-input, .form-select, .form-textarea {
+            background: #222; border: 1px solid #444; color: #fff;
+            padding: 12px; border-radius: 8px; font-family: 'Pretendard'; font-size: 1rem;
+            outline: none; transition: 0.2s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--nb-yellow); background: #2a2a2a; }
+        .form-textarea { height: 120px; resize: vertical; line-height: 1.5; }
+        .btn-submit {
+            background: var(--nb-yellow); color: #000; border: none;
+            padding: 15px; width: 100%; border-radius: 12px; font-weight: 800; font-size: 1.1rem;
+            cursor: pointer; margin-top: 10px; transition: 0.2s;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 20px var(--nb-yellow-glow); }
 
         @media (max-width: 900px) {
             .modal-layout { flex-direction: column; height: 90vh; }
@@ -212,14 +240,20 @@
     <div class="ambient-glow"></div>
     <div id="toast" class="toast-container">
         <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
-        <div class="toast-msg">JSON 복사 완료! 붙여넣기 해보세요.</div>
+        <div class="toast-msg">완료!</div>
     </div>
+
+    <input type="file" id="importFile" style="display:none" onchange="importData(this)">
 
     <header>
         <a href="#" class="brand">
             <i class="fa-solid fa-bolt"></i> NanoBanana<span style="color:#fff;">Pro</span>
-            <span class="badge">Archive</span>
         </a>
+        <div class="header-actions">
+            <button class="btn-icon-only" onclick="exportData()" title="데이터 내보내기 (저장)"><i class="fa-solid fa-download"></i></button>
+            <button class="btn-icon-only" onclick="document.getElementById('importFile').click()" title="데이터 가져오기 (복구)"><i class="fa-solid fa-upload"></i></button>
+            <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> 등록</button>
+        </div>
     </header>
 
     <main>
@@ -272,12 +306,42 @@
         </div>
     </dialog>
 
+    <dialog id="addModal" style="width: 100%; max-width: 500px; overflow: visible;">
+        <button class="close-btn" onclick="closeAddModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div style="padding: 40px;">
+            <h2 style="margin-top: 0; margin-bottom: 25px; color: var(--nb-yellow);">✨ 새 프롬프트 등록</h2>
+            
+            <div class="form-group">
+                <label class="form-label">카테고리</label>
+                <select id="newCat" class="form-select">
+                    <option value="material">질감/재질</option>
+                    <option value="food">푸드/디저트</option>
+                    <option value="nature">자연/힐링</option>
+                    <option value="tech">테크/SF</option>
+                    <option value="art">예술/스타일</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">제목</label>
+                <input type="text" id="newTitle" class="form-input" placeholder="예: 무지개 솜사탕">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">프롬프트 (영어)</label>
+                <textarea id="newPrompt" class="form-textarea" placeholder="3D typography of text..."></textarea>
+            </div>
+
+            <button class="btn-submit" onclick="addNewItem()">등록하기</button>
+        </div>
+    </dialog>
+
     <script>
-        // --- 🔑 GitHub Pages 절대 주소 (고정) ---
+        // --- 🔑 GitHub Pages 절대 주소 ---
         const IMAGE_BASE_URL = "https://6aiwinners9-juseong.github.io/Ai_winners-Typography/images/";
 
-        // --- 100개 프롬프트 DB (순서 오류 완벽 수정) ---
-        const db = [
+        // --- 100개 프롬프트 DB (기본 데이터) ---
+        const defaultDb = [
             // [Material] (20 items)
             { id: 1, cat: 'material', title: '말랑말랑 젤리', prompt: '3D typography of text "말랑말랑" made of translucent soft gummy jelly material, pink and orange gradient, sugar coated texture, bright studio lighting.' },
             { id: 2, cat: 'material', title: '리퀴드 골드', prompt: '3D typography of text "황금" formed by melting liquid gold, dripping effect, metallic reflection, black background, high contrast.' },
@@ -300,7 +364,7 @@
             { id: 19, cat: 'material', title: '골판지 박스', prompt: 'Text "배송" constructed from cardboard box material, recycled paper texture, tape details.' },
             { id: 20, cat: 'material', title: '알루미늄 호일', prompt: 'Text "반짝" made of crumpled silver aluminum foil, metallic wrinkles, shiny reflection.' },
 
-            // [Food] (20 items) - ✅ 순서 완벽 복구
+            // [Food] (20 items)
             { id: 21, cat: 'food', title: '모짜렐라 치즈', prompt: '3D text "치즈" formed by stretching melted mozzarella cheese, pizza background, appetizing food photography.' },
             { id: 22, cat: 'food', title: '신선한 과일', prompt: 'Text "상큼" carved from fresh fruit flesh (orange, kiwi, strawberry), water droplets, vibrant juicy colors.' },
             { id: 23, cat: 'food', title: '달콤한 꿀', prompt: 'Text "달콤" formed by thick golden honey dripping from a dipper, honeycomb background, sticky texture.' },
@@ -389,7 +453,7 @@
             { id: 100, cat: 'art', title: '조각상', prompt: 'Text "신화" carved from white marble stone, classical greek sculpture style.' }
         ];
 
-        // --- Config ---
+        // --- Config & State ---
         const categoryMeta = {
             'material': { title: '질감 & 재질', icon: 'fa-gem' },
             'food': { title: '푸드 & 디저트', icon: 'fa-burger' },
@@ -400,14 +464,111 @@
 
         const contentArea = document.getElementById('contentArea');
         const modal = document.getElementById('modal');
+        const addModal = document.getElementById('addModal');
         const chips = document.querySelectorAll('.chip');
         const toast = document.getElementById('toast');
         const copyBtn = document.getElementById('copyBtn');
         
+        let db = []; // 실제 사용될 DB (기본+로컬)
         let currentFilter = 'all';
         let currentItems = [];
         let visibleCount = 0;
         const ITEMS_PER_PAGE = 10; 
+
+        // --- 🟢 초기화 ---
+        function initDB() {
+            db = [...defaultDb];
+            const localItems = JSON.parse(localStorage.getItem('nb_user_items')) || [];
+            if (localItems.length > 0) {
+                db = db.concat(localItems);
+            }
+        }
+
+        // --- 🟢 백업 & 복구 기능 ---
+        // 1. 내보내기 (다운로드)
+        function exportData() {
+            const localItems = localStorage.getItem('nb_user_items');
+            if (!localItems || JSON.parse(localItems).length === 0) {
+                alert('저장된 새 프롬프트가 없습니다.');
+                return;
+            }
+            const blob = new Blob([localItems], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `nano_banana_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('백업 파일이 다운로드되었습니다.');
+        }
+
+        // 2. 가져오기 (파일 읽기)
+        function importData(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const newItems = JSON.parse(e.target.result);
+                    if (!Array.isArray(newItems)) throw new Error();
+
+                    // 기존 데이터와 합치기
+                    const currentItems = JSON.parse(localStorage.getItem('nb_user_items')) || [];
+                    const mergedItems = currentItems.concat(newItems);
+                    
+                    localStorage.setItem('nb_user_items', JSON.stringify(mergedItems));
+                    alert('복구가 완료되었습니다! 페이지를 새로고침합니다.');
+                    location.reload();
+                } catch (err) {
+                    alert('잘못된 백업 파일입니다.');
+                }
+            };
+            reader.readAsText(file);
+            input.value = ''; // 초기화
+        }
+
+        // --- 🟢 새 아이템 등록 로직 ---
+        function openAddModal() { addModal.showModal(); }
+        function closeAddModal() { addModal.close(); }
+        
+        function addNewItem() {
+            const cat = document.getElementById('newCat').value;
+            const title = document.getElementById('newTitle').value;
+            const prompt = document.getElementById('newPrompt').value;
+
+            if (!title || !prompt) {
+                alert('제목과 프롬프트를 모두 입력해주세요.');
+                return;
+            }
+
+            // 새 ID 생성
+            const maxId = db.reduce((max, item) => item.id > max ? item.id : max, 0);
+            const newItem = {
+                id: maxId + 1,
+                cat: cat,
+                title: title,
+                prompt: prompt,
+                isLocal: true // 로컬 아이템 표시
+            };
+
+            // 메모리 & 로컬스토리지 저장
+            db.push(newItem);
+            const localItems = JSON.parse(localStorage.getItem('nb_user_items')) || [];
+            localItems.push(newItem);
+            localStorage.setItem('nb_user_items', JSON.stringify(localItems));
+
+            closeAddModal();
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newPrompt').value = '';
+
+            if (currentFilter === 'all' || currentFilter === cat) {
+                render(currentFilter);
+            } else {
+                alert('등록되었습니다!');
+            }
+            showToast('성공적으로 등록되었습니다!');
+        }
 
         // --- Render ---
         function render(filter) {
@@ -497,8 +658,13 @@
                 card.className = 'card';
                 card.onclick = () => openModal(item);
                 
-                // --- 🔑 [수정됨] 절대 주소 + .jpeg 확장자 사용 ---
-                const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
+                let imgUrl;
+                // ✨ 로컬 아이템이면 플레이스홀더 사용, 아니면 깃허브 이미지 사용
+                if (item.isLocal) {
+                    imgUrl = `https://placehold.co/600x600/222/FFE135?text=${encodeURIComponent(item.title)}`;
+                } else {
+                    imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
+                }
                 
                 card.innerHTML = `
                     <div class="card-img-box">
@@ -514,6 +680,8 @@
             });
         }
 
+        // --- 실행 ---
+        initDB(); // 데이터 로드
         render('all');
 
         chips.forEach(chip => {
@@ -526,8 +694,12 @@
 
         // --- Copy & Modal with JSON ---
         function openModal(item) {
-            // --- 🔑 [수정됨] 절대 주소 + .jpeg 확장자 사용 ---
-            const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
+            let imgUrl;
+            if (item.isLocal) {
+                imgUrl = `https://placehold.co/600x600/222/FFE135?text=${encodeURIComponent(item.title)}`;
+            } else {
+                imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
+            }
             
             document.getElementById('mImg').src = imgUrl;
             document.getElementById('mCat').innerText = categoryMeta[item.cat].title.toUpperCase();
@@ -543,7 +715,6 @@
             };
 
             const rawJson = JSON.stringify(promptJson, null, 2);
-            // 이스케이프된 따옴표(\")로 감싸진 부분을 찾아 하이라이트
             const highlightedJson = rawJson.replace(/\\"(.*?)\\"/g, '<span class="highlight">\\"$1\\"</span>');
 
             document.getElementById('mPrompt').innerHTML = highlightedJson;
@@ -555,6 +726,9 @@
         
         function closeModal() { modal.close(); }
         modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+        
+        // Add Modal Event Listener (Backdrop click to close)
+        addModal.addEventListener('click', e => { if(e.target === addModal) closeAddModal(); });
 
         function copyPrompt() {
             const rawText = document.getElementById('mPrompt').dataset.raw;
@@ -562,7 +736,7 @@
                 const btn = document.getElementById('copyBtn');
                 btn.classList.add('success');
                 btn.innerHTML = '<i class="fa-solid fa-check"></i> COPIED!';
-                showToast();
+                showToast('JSON 복사 완료!');
                 setTimeout(resetCopyBtn, 2000);
             });
         }
@@ -573,7 +747,8 @@
             btn.innerHTML = '<i class="fa-regular fa-copy"></i> COPY JSON';
         }
 
-        function showToast() {
+        function showToast(msg) {
+            if(msg) document.querySelector('.toast-msg').innerText = msg;
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
