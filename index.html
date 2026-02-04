@@ -86,59 +86,42 @@
         /* --- Grid --- */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
 
-        /* --- 🃏 Premium Card Design (업그레이드됨) --- */
         .card {
-            background: rgba(255, 255, 255, 0.02); /* 더 투명하고 고급스러운 유리 질감 */
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px; /* 모서리를 더 둥글게 */
-            overflow: hidden;
-            cursor: pointer;
+            border-radius: 24px;
+            overflow: hidden; cursor: pointer;
             transition: all 0.5s var(--ease-smooth);
-            position: relative;
-            display: flex; flex-direction: column;
-            box-shadow: 0 0 0 1px rgba(0,0,0,0), 0 10px 30px -10px rgba(0,0,0,0.5); /* 기본 상태 그림자 */
+            position: relative; display: flex; flex-direction: column;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0), 0 10px 30px -10px rgba(0,0,0,0.5);
         }
-        
         .card:hover {
-            transform: translateY(-10px) scale(1.02); /* 호버 시 더 부드럽게 떠오름 */
-            border-color: rgba(255, 225, 53, 0.4); /* 노란색 테두리 빛 */
-            box-shadow: 0 0 20px rgba(255, 225, 53, 0.1), 0 30px 60px -20px rgba(0,0,0,0.8); /* 강력한 빛과 그림자 */
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 225, 53, 0.4);
+            box-shadow: 0 0 20px rgba(255, 225, 53, 0.1), 0 30px 60px -20px rgba(0,0,0,0.8);
             z-index: 10;
         }
 
-        /* --- 🖼️ 이미지 영역 (핵심 수정) --- */
+        /* --- 🖼️ Image Box (Balanced) --- */
         .card-img-box { 
-            width: 100%; 
-            padding-top: 100%; /* 1:1 정사각형 비율 */
-            position: relative; 
-            overflow: hidden; 
-            /* 단색 검정이 아닌 은은한 중앙 그라데이션으로 깊이감 부여 */
+            width: 100%; padding-top: 100%; position: relative; overflow: hidden; 
             background: radial-gradient(circle at center, rgba(40,40,40,1) 0%, rgba(10,10,10,1) 100%);
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
-        
         .card-img-box img { 
-            position: absolute; 
-            top: 50%; left: 50%; 
-            transform: translate(-50%, -50%) scale(0.92); /* 중앙 정렬 및 약간 축소하여 여백 확보 */
-            width: 100%; height: 100%; 
-            object-fit: contain; /* 이미지 잘림 방지 */
-            transition: all 0.6s var(--ease-smooth); /* 부드러운 전환 */
-            /* 이미지가 바닥에서 떠있는 듯한 그림자 효과 */
+            position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%) scale(0.92);
+            width: 100%; height: 100%; object-fit: contain;
+            transition: all 0.6s var(--ease-smooth);
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
         }
-
-        /* 호버 시 이미지 인터랙션 */
         .card:hover .card-img-box img { 
-            /* 살짝 확대되면서 위로 떠오르는 효과 (잘리지는 않음) */
             transform: translate(-50%, -52%) scale(0.98); 
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7)); /* 그림자도 같이 깊어짐 */
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
         }
-        /* ------------------------------------- */
         
         .card-info { 
             padding: 20px 24px; flex: 1; display: flex; flex-direction: column; justify-content: center; 
-            /* 텍스트 영역 배경을 더 부드럽게 처리 */
             background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.3) 100%);
             border-top: 1px solid rgba(255,255,255,0.02);
         }
@@ -284,10 +267,10 @@
     </dialog>
 
     <script>
-        // --- 🔑 GitHub Pages 절대 주소 ---
+        // --- 🔑 GitHub Pages 절대 주소 (고정) ---
         const IMAGE_BASE_URL = "https://6aiwinners9-juseong.github.io/Ai_winners-Typography/images/";
 
-        // --- 100개 프롬프트 DB ---
+        // --- 100개 프롬프트 DB (순서 오류 완벽 수정) ---
         const db = [
             // [Material] (20 items)
             { id: 1, cat: 'material', title: '말랑말랑 젤리', prompt: '3D typography of text "말랑말랑" made of translucent soft gummy jelly material, pink and orange gradient, sugar coated texture, bright studio lighting.' },
@@ -311,7 +294,7 @@
             { id: 19, cat: 'material', title: '골판지 박스', prompt: 'Text "배송" constructed from cardboard box material, recycled paper texture, tape details.' },
             { id: 20, cat: 'material', title: '알루미늄 호일', prompt: 'Text "반짝" made of crumpled silver aluminum foil, metallic wrinkles, shiny reflection.' },
 
-            // [Food] (20 items)
+            // [Food] (20 items) - 순서 완벽 복구
             { id: 21, cat: 'food', title: '육즙 스테이크', prompt: '3D typography of the word "육즙" formed by dripping, glistening meat juice and melted fat. Rich savory brown color, sizzling texture with rising steam, macro lens photography, dark warm lighting.' },
             { id: 22, cat: 'food', title: '갓 구운 빵', prompt: 'Typography "빵" baked as a crusty golden-brown sourdough loaf block. Cracked surface texture dusted with white flour, warm oven light, steam rising, rustic bakery background.' },
             { id: 23, cat: 'food', title: '건배 맥주', prompt: 'High-speed photography of the word "건배" formed by a dynamic splash of golden beer and foam as glasses clink. Exploding bubbles, motion freeze, celebratory party bokeh background.' },
@@ -508,7 +491,7 @@
                 card.className = 'card';
                 card.onclick = () => openModal(item);
                 
-                // --- 🔑 .jpeg 확장자 및 절대 주소 사용 ---
+                // --- 🔑 [수정됨] 절대 주소 + .jpeg 확장자 사용 ---
                 const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
                 
                 card.innerHTML = `
@@ -537,7 +520,7 @@
 
         // --- Copy & Modal ---
         function openModal(item) {
-            // --- 🔑 .jpeg 확장자 및 절대 주소 사용 ---
+            // --- 🔑 [수정됨] 절대 주소 + .jpeg 확장자 사용 ---
             const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
             
             document.getElementById('mImg').src = imgUrl;
