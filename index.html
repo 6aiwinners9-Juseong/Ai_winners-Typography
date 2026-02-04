@@ -103,28 +103,20 @@
             z-index: 10;
         }
 
-        /* --- 🖼️ Image Box (Full Cover - 꽉 채우기) --- */
+        /* --- 🖼️ Image Box (Full Cover) --- */
         .card-img-box { 
-            width: 100%; 
-            padding-top: 100%; /* 1:1 정사각형 비율 */
-            position: relative; 
-            overflow: hidden; 
+            width: 100%; padding-top: 100%; position: relative; overflow: hidden; 
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
         
         .card-img-box img { 
-            position: absolute; 
-            top: 0; left: 0; 
+            position: absolute; top: 0; left: 0; 
             width: 100%; height: 100%; 
-            object-fit: cover; /* ✨ 이미지가 박스를 꽉 채우도록 변경 (잘리는 부분 발생) */
-            transition: transform 0.6s var(--ease-smooth); /* 부드러운 확대 효과용 */
+            object-fit: cover; 
+            transition: transform 0.6s var(--ease-smooth); 
         }
 
-        /* 호버 시 이미지 확대 효과 */
-        .card:hover .card-img-box img { 
-            transform: scale(1.1); 
-        }
-        /* ------------------------------------- */
+        .card:hover .card-img-box img { transform: scale(1.1); }
         
         .card-info { 
             padding: 20px 24px; flex: 1; display: flex; flex-direction: column; justify-content: center; 
@@ -169,7 +161,15 @@
             background: #222; padding: 10px 15px; font-size: 0.8rem; color: #888;
             display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
         }
-        .prompt-box { padding: 20px; font-family: 'JetBrains Mono', monospace; line-height: 1.7; color: #ddd; font-size: 0.95rem; }
+        /* --- ✨ [수정] JSON 포맷을 위한 CSS --- */
+        .prompt-box { 
+            padding: 20px; 
+            font-family: 'JetBrains Mono', monospace; 
+            line-height: 1.7; 
+            color: #ddd; 
+            font-size: 0.9rem;
+            white-space: pre-wrap; /* JSON 줄바꿈과 들여쓰기 유지 */
+        }
         .highlight { color: var(--nb-yellow); font-weight: bold; text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 4px; }
         
         .btn-copy { 
@@ -212,7 +212,7 @@
     <div class="ambient-glow"></div>
     <div id="toast" class="toast-container">
         <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
-        <div class="toast-msg">복사 완료! 붙여넣기 해보세요.</div>
+        <div class="toast-msg">JSON 복사 완료! 붙여넣기 해보세요.</div>
     </div>
 
     <header>
@@ -247,9 +247,9 @@
                 <div style="margin-top:20px;">
                     <div class="prompt-container">
                         <div class="prompt-header">
-                            <span><i class="fa-solid fa-terminal"></i> PROMPT</span>
+                            <span><i class="fa-solid fa-terminal"></i> JSON PROMPT</span>
                             <button id="copyBtn" class="btn-copy" onclick="copyPrompt()">
-                                <i class="fa-regular fa-copy"></i> COPY CODE
+                                <i class="fa-regular fa-copy"></i> COPY JSON
                             </button>
                         </div>
                         <div class="prompt-box">
@@ -524,7 +524,7 @@
             });
         });
 
-        // --- Copy & Modal ---
+        // --- Copy & Modal with JSON ---
         function openModal(item) {
             // --- 🔑 [수정됨] 절대 주소 + .jpeg 확장자 사용 ---
             const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
@@ -532,9 +532,23 @@
             document.getElementById('mImg').src = imgUrl;
             document.getElementById('mCat').innerText = categoryMeta[item.cat].title.toUpperCase();
             document.getElementById('mTitle').innerText = item.title;
-            const markedPrompt = item.prompt.replace(/"(.*?)"/g, '<span class="highlight">"$1"</span>');
-            document.getElementById('mPrompt').innerHTML = markedPrompt;
-            document.getElementById('mPrompt').dataset.raw = item.prompt;
+
+            // --- 🛠️ JSON Format Logic ---
+            const promptJson = {
+                model: "NB Pro v3",
+                steps: 30,
+                guidance: 7.5,
+                prompt: item.prompt,
+                negative_prompt: "low quality, bad anatomy, distortion, watermark"
+            };
+
+            const rawJson = JSON.stringify(promptJson, null, 2);
+            // 이스케이프된 따옴표(\")로 감싸진 부분을 찾아 하이라이트
+            const highlightedJson = rawJson.replace(/\\"(.*?)\\"/g, '<span class="highlight">\\"$1\\"</span>');
+
+            document.getElementById('mPrompt').innerHTML = highlightedJson;
+            document.getElementById('mPrompt').dataset.raw = rawJson;
+            
             resetCopyBtn();
             modal.showModal();
         }
@@ -556,7 +570,7 @@
         function resetCopyBtn() {
             const btn = document.getElementById('copyBtn');
             btn.classList.remove('success');
-            btn.innerHTML = '<i class="fa-regular fa-copy"></i> COPY CODE';
+            btn.innerHTML = '<i class="fa-regular fa-copy"></i> COPY JSON';
         }
 
         function showToast() {
