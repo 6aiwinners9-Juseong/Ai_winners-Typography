@@ -240,12 +240,12 @@
         </div>
     </dialog>
 
-   <script>
-        // --- 🔑 GitHub 이미지 경로 설정 ---
-        // 파일명이 1.jpeg, 2.jpeg ... 형식이어야 합니다.
-        const IMAGE_BASE_URL = "./images/";
+    <script>
+        // --- 🔑 [수정됨] GitHub Pages의 실제 이미지 경로 (절대 주소) ---
+        // 이 주소는 안주성 님의 저장소 구조에 맞춘 것입니다.
+        const IMAGE_BASE_URL = "https://6aiwinners9-juseong.github.io/Ai_winners-Typography/images/";
 
-        // --- 100개 프롬프트 DB ---
+        // --- 100개 프롬프트 DB (리뉴얼 완료) ---
         const db = [
             // [Material] (20 items)
             { id: 1, cat: 'material', title: '말랑말랑 젤리', prompt: '3D typography of text "말랑말랑" made of translucent soft gummy jelly material, pink and orange gradient, sugar coated texture, bright studio lighting.' },
@@ -466,13 +466,13 @@
                 card.className = 'card';
                 card.onclick = () => openModal(item);
                 
-                // --- 🔑 확장자 .jpeg 수정 적용됨 ---
+                // --- 🔑 [중요] 절대 주소 + .jpeg 확장자 사용 ---
                 const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
                 
                 card.innerHTML = `
                     <div class="card-img-box">
                         <img src="${imgUrl}" loading="lazy" alt="${item.title}" 
-                             onerror="this.src='https://placehold.co/400x400/222/FFE135?text=No+Image'">
+                             onerror="this.src='https://placehold.co/400x400/222/FFE135?text=Loading...'">
                     </div>
                     <div class="card-info">
                         <h3 class="card-title">${item.title}</h3>
@@ -495,7 +495,7 @@
 
         // --- Copy & Modal ---
         function openModal(item) {
-            // --- 🔑 확장자 .jpeg 수정 적용됨 ---
+            // --- 🔑 [중요] 절대 주소 + .jpeg 확장자 사용 ---
             const imgUrl = `${IMAGE_BASE_URL}${item.id}.jpeg`;
             
             document.getElementById('mImg').src = imgUrl;
