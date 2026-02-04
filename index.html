@@ -86,6 +86,7 @@
         /* --- Grid --- */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
 
+        /* --- 🃏 Card Design --- */
         .card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -102,23 +103,28 @@
             z-index: 10;
         }
 
-        /* --- 🖼️ Image Box (Balanced) --- */
+        /* --- 🖼️ Image Box (Full Cover - 꽉 채우기) --- */
         .card-img-box { 
-            width: 100%; padding-top: 100%; position: relative; overflow: hidden; 
-            background: radial-gradient(circle at center, rgba(40,40,40,1) 0%, rgba(10,10,10,1) 100%);
+            width: 100%; 
+            padding-top: 100%; /* 1:1 정사각형 비율 */
+            position: relative; 
+            overflow: hidden; 
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
+        
         .card-img-box img { 
-            position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%) scale(0.92);
-            width: 100%; height: 100%; object-fit: contain;
-            transition: all 0.6s var(--ease-smooth);
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            object-fit: cover; /* ✨ 이미지가 박스를 꽉 채우도록 변경 (잘리는 부분 발생) */
+            transition: transform 0.6s var(--ease-smooth); /* 부드러운 확대 효과용 */
         }
+
+        /* 호버 시 이미지 확대 효과 */
         .card:hover .card-img-box img { 
-            transform: translate(-50%, -52%) scale(0.98); 
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
+            transform: scale(1.1); 
         }
+        /* ------------------------------------- */
         
         .card-info { 
             padding: 20px 24px; flex: 1; display: flex; flex-direction: column; justify-content: center; 
